@@ -17,6 +17,7 @@
     var SelectedListView = Backbone.View.extend({
         el: $('body'), // el attaches to existing element
         self: this,
+        template: _.template($('#fooditem-template').html()),
         selectedItemsForToday: [],
         events: {
             "click button[name='addToTotal']": "selectItem",
@@ -34,11 +35,14 @@
                 calories: this.collection.models[$currentIndex].get("calories"),
                 index: $currentIndex
             });
-            $('#selected-items', this.el).append("<li class='foodItem'><span class='foodName'>" + e.get('name') + "</span> <span class='calorieValue'> " + e.get('calories') + " cal </span> </li>");
+            $('#selected-items', this.el).append(this.template(e.attributes));
             this.addToTotal(e);
         },
         getCollection: function() {
             return this.collection;
+        },
+        clearCollection: function() {
+            this.collection.reset();
         },
         render: function() {
             var localStore = window.localStorage;
@@ -47,8 +51,8 @@
             if (dayItemStorage) {
                 var jsonDayItemStorage = JSON.parse(dayItemStorage);
                 for (var j = 0; j < jsonDayItemStorage.length; j++) {
-                    var jsonItem = jsonDayItemStorage[j]
-                    $('#selected-items', this.el).append("<li class='foodItem'><span class='foodName'>" + jsonItem['name'] + "</span> <span class='calorieValue'> " + jsonItem['calories'] + " cal </span> </li>");
+                    var jsonItem = jsonDayItemStorage[j];
+                    $('#selected-items', this.el).append(this.template(jsonItem));
                 }
             }
         },
@@ -60,7 +64,7 @@
         addToTotal: function(e) {
             this.selectedItemsForToday.push(e);
             self.totalView.updateDayTotal(e);
-            //JCJC : why does this work??
+            //TODO
         }
     });
 
@@ -106,7 +110,6 @@
         },
         render: function() {
             $("#totals-by-day").empty();
-            //JC self doesn't work here. why?
             for (var i = 0; i < this.dayTotals.length; i++) {
                 $("#totals-by-day").append("<tr> <td> " + this.dayNames[i] + " </td> <td>" + this.dayTotals[i] + " cal </td> </tr>");
             }
@@ -120,7 +123,8 @@
         // `events`: Where DOM events are bound to View methods. Backbone doesn't have a separate controller to handle such bindings; it all happens in a View.
         events: {
             "click button#search": "getJSONResults",
-            "click button#clear": "clearResults"
+            "click button#clear": "clearResults",
+            "keypress input#search-val" : "checkAndSubmitresults"
         },
 
         initialize: function() {
@@ -143,6 +147,7 @@
         },
         getJSONResults: function() {
             self.clearResults();
+            self.selectedListView.clearCollection();
             var e = $("#search-val").val(),
                 a = "https://api.nutritionix.com/v1_1/search/" + e + "?results=0:20&fields=item_name,brand_name,item_id,nf_calories&appId=323fe4ef&appKey=9b8af06a3904049cbd7fea787d4088a6";
             $.ajax({
@@ -170,6 +175,12 @@
                     $("#search-results").append("<p>Couldn't get Nutritionix data. Check your internet connection or try again later.</p>");
                 }
             });
+        },
+        checkAndSubmitresults : function(event) {
+            if(event.keyCode === 13) {
+                event.preventDefault();
+                self.getJSONResults();
+            }
         },
         clearResults: function() {
             $("#search-results").empty();

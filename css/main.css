@@ -1,19 +1,13 @@
 body {
 	background-color: #213d48;
 	color: white;
-	font-family:"Lato", sans-serif;
+	font-family: "Lato", sans-serif;
 	font-weight: 300;
 }
 
 ul {
 	list-style-type: none;
-	padding-left: 0px;
-}
-
-#food-options,
-#selected-food,
-#daily-totals {
-	vertical-align: top;
+	padding-left: 0;
 }
 
 header {
@@ -22,7 +16,7 @@ header {
 }
 
 .appButton {
-	box-shadow: inset 0px 0px 15px 3px #23395e;
+	box-shadow: inset 0 0 15px 3px #23395e;
 	background: linear-gradient(to bottom, #213d48 5%, #415989 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2e466e', endColorstr='#415989',GradientType=0);
 	background-color: #2e466e;
@@ -30,12 +24,12 @@ header {
 	border: 1px solid #1f2f47;
 	display: inline-block;
 	cursor: pointer;
-	color: #ffffff;
+	color: #fff;
 	font-family: Arial;
 	font-size: 15px;
 	padding: 6px 13px;
 	text-decoration: none;
-	text-shadow: 0px 1px 0px #263666;
+	text-shadow: 0 1px 0 #263666;
 }
 
 .appButton:hover {
@@ -84,7 +78,7 @@ header {
 }
 
 .loading-icon {
-	width:100%;
+	width: 100%;
 	height: 100%;
 }
 
@@ -149,14 +143,14 @@ header,
 
 @media screen and (max-width: 563px){
 	.close-icon {
-		padding-right: 0px;
+		padding-right: 0;
 	}
 }
 
 @media screen and (min-width: 790px){
 	#food-options,
 	#selected-food  {
-		width:50%;
+		width: 50%;
 	}
 }
 
@@ -164,6 +158,6 @@ header,
 	#food-options,
 	#selected-food,
 	#daily-totals  {
-		width:33.3333333333%;
+		width: 33.3333333333%;
 	}		
 }

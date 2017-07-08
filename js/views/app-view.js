@@ -1,4 +1,5 @@
 (function($) {
+    'use strict';
     var AppView = Backbone.View.extend({
         el: $('body'), // el attaches to existing element
         self: this,
@@ -37,6 +38,10 @@
                 url: a,
                 dataType: "json",
                 success: function(e) {
+                    if(e.hits.length === 0) {
+                        $("#search-results").append("<p>Couldn't find any results.</p>");
+                    }
+
                     for (var a = e.hits, i = 0; i < a.length; i++) {
                         var fields = a[i].fields;
                         var item = new window.app.Item();

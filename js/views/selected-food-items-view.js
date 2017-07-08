@@ -1,4 +1,5 @@
 (function($) {
+    'use strict';
     window.app = window.app || { };
 
     window.app.SelectedListView = Backbone.View.extend({

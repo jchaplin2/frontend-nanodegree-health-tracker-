@@ -1,4 +1,5 @@
 (function($) {
+    'use strict';
     window.app = window.app || { };
 
     window.app.DailyTotalView = Backbone.View.extend({
@@ -32,8 +33,8 @@
         },
         updateDayTotal: function(e) {
             var todayDateIndex = new Date().getDay();
-            var dateTotal = this.dayTotals[todayDateIndex];
-            dateTotal += e.get("calories");
+            var dateTotal = parseFloat(this.dayTotals[todayDateIndex]);
+            dateTotal += parseFloat(e.get("calories"));
             this.dayTotals[todayDateIndex] = dateTotal;
             this.render();
         },

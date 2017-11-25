@@ -141,7 +141,19 @@ header,
 	width: 100%;
 }
 
-@media screen and (max-width: 563px){
+@media screen and (max-width: 352px){
+	.search-box {
+		width: 210px;
+	}
+}
+
+@media screen and (min-width: 352px){
+	.search-box {
+		width: 270px;
+	}
+}
+
+@media screen and (min-width: 563px){
 	.close-icon {
 		padding-right: 0;
 	}
@@ -151,6 +163,9 @@ header,
 	#food-options,
 	#selected-food  {
 		width: 50%;
+	}
+	.search-box {
+		width: 450px;
 	}
 }
 
